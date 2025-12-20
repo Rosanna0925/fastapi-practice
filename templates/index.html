@@ -6,6 +6,8 @@
 <body>
     <h1>Movie List</h1>
     <p>let's add new movie!</p>
-    <p>{{movies}}</p>
+    {% for movie in movies: %}
+    <p>{{movie.name}}</p>
+    {% endfor %}
 </body>
 </html>

@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
+from typing import Annotated
 from pydantic import BaseModel
 
 SQLALCHEMY_DATABASE_URL="sqlite:///./test.db"
@@ -34,8 +35,10 @@ app=FastAPI()
 
 templates=Jinja2Templates(directory="templates")
 
-@app.get("/", response_class=HTMLResponse)
+@app.api_route("/", methods=["GET","POST"],response_class=HTMLResponse)
 async def read_root(request: Request):
-    movies=Movie.query.all()
+    movies=session.query(Movie).all()
+    print(type(movies))
+    print(len(movies))
     return templates.TemplateResponse(
-        request=request, name="index.html", movies=movies)
+        request=request, name="index.html", context={"movies":movies})
