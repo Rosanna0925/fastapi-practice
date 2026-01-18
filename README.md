@@ -1,5 +1,5 @@
 # **Movie Database Management System**
-A lightweight, web-based movie management application built with **FastAPI** and **SQLAlchemy**. This project provides a user-friendly interface to manage a digital library of movies using full CRUD (Create, Read, Update, Delete) operations.
+A robust, web-based movie management application built with FastAPI, PostgreSQL, and Docker. This project demonstrates a professional backend workflow including database migrations and containerized environments.
 
 ## Features
 
@@ -7,7 +7,8 @@ A lightweight, web-based movie management application built with **FastAPI** and
 * **Add New Movies:** Integrated add.html interface that captures form data from the browser to expand your collection.
 * **Update Information:** Modify details of existing movie records dynamically.
 * **Delete Records:** Remove entries from the database with a single action.
-* **Interactive API Docs:** Fully documented endpoints powered by Swagger UI.
+* **Database Migrations:** Version-controlled schema changes using Alembic.
+* **Containerized DB:** Reliable PostgreSQL environment powered by Docker Compose.
 
 ## Tech Stack
 
@@ -16,7 +17,9 @@ A lightweight, web-based movie management application built with **FastAPI** and
 
 * **ORM:** [SQLAlchemy](https://www.sqlalchemy.org/)
 
-* **Database:** SQLite
+* **Database:** PostgreSQL 15
+
+* **Migration Tool:** Alembic
 
 * **Templating:** Jinja2
 
@@ -25,14 +28,18 @@ A lightweight, web-based movie management application built with **FastAPI** and
 ## Project Structure
 
 ```text
-├── main.py              # Main application logic (API, Models, and Database config)
-├── README.md            # Project documentation
-├── test.db              # SQLite database file (generated after first run)
-├── templates/           # HTML frontend files
-│   ├── index.html       # Homepage showing all movies
-│   ├── add.html         # Form to add new movie entries
-│   └── edit.html        # Form to update existing movies information
-└── requirements.txt     # Project dependencies
+├── alembic/              # Database migration scripts and environment
+├── alembic.ini           # Alembic configuration
+├── docker-compose.yml    # Docker services (PostgreSQL container setup)
+├── database.py           # Database engine connection and session logic
+├── models.py             # SQLAlchemy ORM models (database table schemas)
+├── main.py               # Main application logic and API route handlers
+├── README.md             # Project documentation
+├── templates/            # HTML frontend files (Jinja2)
+│   ├── index.html        # Main dashboard showing movie list
+│   ├── add.html          # Interface for adding new movies
+│   └── edit.html         # Interface for updating existing records
+└── requirements.txt      # Project dependencies and libraries
 ```
 
 ## Getting Started
@@ -52,7 +59,15 @@ source venv/bin/activate
 
 ```pip install -r requirements.txt```
 
-**4.Run the Application**
+**4.Start Database (Docker)**
+
+```docker-compose up -d```
+
+**5.Apply Database Migrations**
+
+```alembic upgrade head```
+
+**6.Run the Application**
 
 ```uvicorn main:app --reload```
 
